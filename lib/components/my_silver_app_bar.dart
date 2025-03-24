@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fooddeliveryapp/pages/cart_page.dart';
 
 class MySilverAppBar extends StatelessWidget {
   const MySilverAppBar({super.key, required this.child, required this.title});
@@ -13,16 +14,20 @@ class MySilverAppBar extends StatelessWidget {
       collapsedHeight: 120,
       floating: false,
       pinned: true,
-      actions: [IconButton(onPressed: () {},
-          icon: Icon(Icons.shopping_cart))],
-      backgroundColor: Theme
-          .of(context)
-          .colorScheme
-          .surface,
-      foregroundColor: Theme
-          .of(context)
-          .colorScheme
-          .inversePrimary,
+      actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CartPage(),
+                ),
+              );
+            },
+            icon: Icon(Icons.shopping_cart))
+      ],
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      foregroundColor: Theme.of(context).colorScheme.inversePrimary,
       title: Text("Sunset Dinner"),
       flexibleSpace: FlexibleSpaceBar(
         background: Padding(
@@ -31,7 +36,7 @@ class MySilverAppBar extends StatelessWidget {
         ),
         title: title,
         centerTitle: true,
-        titlePadding: EdgeInsets.only(left: 0, right: 0, top:0),
+        titlePadding: EdgeInsets.only(left: 0, right: 0, top: 0),
         expandedTitleScale: 1,
       ),
     );

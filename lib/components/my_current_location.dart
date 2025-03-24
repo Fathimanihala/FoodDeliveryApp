@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:fooddeliveryapp/model/Restaurant.dart';
+import 'package:provider/provider.dart';
 
 class MyCurrentLocation extends StatelessWidget {
-  const MyCurrentLocation({super.key});
-
+   MyCurrentLocation({super.key});
+final textController= TextEditingController();
   void openLoctionSearchBox(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text("Your Location"),
-        content: TextField(
-          decoration: InputDecoration(hintText: "Search address"),
+        content: TextField( controller: textController,
+          decoration: InputDecoration(hintText: "Enter address"),
         ),
         actions: [
           MaterialButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(context);
+              textController.clear();
+            },
             child: Text("Cancel"),
           ),
           MaterialButton(
-            onPressed: () => Navigator.pop(context),
+
+            onPressed: () {
+              String newAddress= textController.text;
+              context.read<Restaurant>().updateDeliveyAddress(newAddress);
+              Navigator.pop(context);
+              textController.clear();
+  },
             child: Text("Save"),
           ),
 
@@ -41,12 +52,12 @@ class MyCurrentLocation extends StatelessWidget {
             onTap: () => openLoctionSearchBox(context),
             child: Row(
               children: [
-                Text(
-                  "236 hollywood",
+                Consumer<Restaurant>(builder:(context,restaurant,child)=> Text(
+                  restaurant.deliveryAddress,
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
                       fontWeight: FontWeight.bold),
-                ),
+                ),),
                 Icon(Icons.keyboard_arrow_down_rounded)
               ],
             ),
